@@ -501,6 +501,12 @@ body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%
   .mode-panel{display:block!important;page-break-before:always;break-before:page}
   #panel-dashboard{page-break-before:auto;break-before:auto}
   .tab-content{display:block!important;padding:0!important;page-break-inside:auto}
+  body.printing-exec .global-header,
+  body.printing-exec .mode-switcher,
+  body.printing-exec .mode-panel{display:none!important}
+  body.printing-exec #exec-summary{display:block!important;position:static!important;background:none!important;padding:0!important;overflow:visible!important}
+  body.printing-exec .exec-page{box-shadow:none!important;border-radius:0!important;max-width:100%!important;padding:0!important}
+  body.printing-exec .exec-actions,body.printing-exec .exec-close{display:none!important}
   .collapsible .collapsible-body{max-height:none!important;overflow:visible!important}
   .collapsible{break-inside:avoid;page-break-inside:avoid}
   .card,.finding,.impact-block,.prompt-block{background:#fff!important;border:1px solid #d4d4d8!important;color:#111!important;box-shadow:none!important;break-inside:avoid}
@@ -633,7 +639,7 @@ body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%
     <div class="exec-section"><h2>Single Biggest Lever</h2><p>The /beers page returning a 404 error is the most commercially damaging issue on the site. "Craft beer Sheffield" has an estimated 720 monthly searches. There is no page for Google to rank. Building this single page — with brewery list, tap lines, schema markup, and a clear H1 — would be the highest-ROI single action available.</p></div>
     <div class="exec-section"><h2>Unfair Advantage</h2><p>No competitor in Kelham Island has a heated outdoor terrace. No competitor in Sheffield has a brand mythology dating to 3,900 BCE. These two facts should appear on the homepage, in the meta description, in the H1, and in every piece of content produced. Currently, neither is mentioned above the fold.</p></div>
     <div class="exec-actions">
-      <button class="exec-btn exec-btn-print" onclick="document.getElementById('exec-summary').classList.remove('active');setTimeout(function(){window.print()},150)">Print / Save as PDF</button>
+      <button class="exec-btn exec-btn-print" onclick="document.body.classList.add('printing-exec');window.print()">Print / Save as PDF</button>
       <button class="exec-btn exec-btn-close" onclick="document.getElementById('exec-summary').classList.remove('active')">Close</button>
     </div>
   </div>
@@ -3061,6 +3067,7 @@ document.querySelectorAll('.collapsible').forEach(el => {
     if (body) body.style.display = body.style.display === 'none' ? 'block' : 'none';
   });
 });
+window.addEventListener('afterprint', function(){ document.body.classList.remove('printing-exec'); });
 </script>
 
 <footer style="text-align:center;padding:40px 20px;font-size:12px;color:var(--text-muted);border-top:1px solid var(--border);margin-top:60px">
